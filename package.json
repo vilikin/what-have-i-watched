@@ -1,0 +1,10 @@
+{
+  "name": "what-have-i-watched",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.7"
+  },
+  "author": "Vili Kinnunen"
+}
