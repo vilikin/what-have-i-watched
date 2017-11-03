@@ -1,7 +1,8 @@
 const {
     GraphQLString,
     GraphQLObjectType,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLList
 } = require("graphql");
 
 const CommentType = require('./CommentType');
