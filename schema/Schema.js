@@ -3,11 +3,11 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLList,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLInt
 } = require('graphql');
 
 const SeriesType = require('./SeriesType');
-const SeriesInputType = require('./SeriesInputType');
 
 const mockdata = require('../data/mockdata');
 
@@ -29,9 +29,20 @@ module.exports = new GraphQLSchema({
                 type: new GraphQLNonNull(SeriesType),
                 description: 'Add a new series and return it.',
                 args: {
-                    series: { type: SeriesInputType }
+                    name: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    },
+                    description: {
+                        type: GraphQLString
+                    },
+                    currentEpisode: {
+                        type: new GraphQLNonNull(GraphQLInt)
+                    },
+                    currentSeason: {
+                        type: GraphQLInt
+                    }
                 },
-                resolve: (value, { series }) => {
+                resolve: (value, series) => {
                     mockdata.series.push(series);
                     return series;
                 }
