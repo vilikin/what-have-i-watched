@@ -10,6 +10,10 @@ const CommentType = require('./CommentType');
 module.exports = new GraphQLObjectType({
     name: 'SeriesType',
     fields: () => ({
+        id: {
+            type: GraphQLInt,
+            resolve: (root) => root.id
+        },
         name: {
             type: GraphQLString,
             resolve: (root) => root.name

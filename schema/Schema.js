@@ -7,9 +7,9 @@ const {
     GraphQLInt
 } = require('graphql');
 
-const SeriesType = require('./SeriesType');
+const { Series } = require("../data/db");
 
-const mockdata = require('../data/mockdata');
+const SeriesType = require('./SeriesType');
 
 module.exports = new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -17,7 +17,7 @@ module.exports = new GraphQLSchema({
         fields: {
             series: {
                 type: new GraphQLList(SeriesType),
-                resolve: () => mockdata.series
+                resolve: () => Series.findAll()
             }
         }
     }),
@@ -42,10 +42,7 @@ module.exports = new GraphQLSchema({
                         type: GraphQLInt
                     }
                 },
-                resolve: (value, series) => {
-                    mockdata.series.push(series);
-                    return series;
-                }
+                resolve: (value, series) => Series.create(series)
             }
         })
     })
