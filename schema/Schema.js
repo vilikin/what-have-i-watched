@@ -7,7 +7,7 @@ const {
     GraphQLInt
 } = require('graphql');
 
-const { Series } = require("../data/db");
+const { Series, Comment } = require("../data/db");
 
 const SeriesType = require('./SeriesType');
 
@@ -17,7 +17,7 @@ module.exports = new GraphQLSchema({
         fields: {
             series: {
                 type: new GraphQLList(SeriesType),
-                resolve: () => Series.findAll()
+                resolve: () => Series.findAll({ include: [ Comment ] })
             }
         }
     }),

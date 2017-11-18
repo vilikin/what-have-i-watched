@@ -15,6 +15,17 @@ const sequelize = new Sequelize(db, user, pass, {
     }
 });
 
+const Comment = sequelize.define('comment', {
+    user: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    text: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
+});
+
 const Series = sequelize.define('series', {
     id: {
         type: Sequelize.INTEGER,
@@ -37,10 +48,12 @@ const Series = sequelize.define('series', {
     }
 });
 
-Series.sync({force: true});
+Series.hasMany(Comment);
 
-
+Comment.sync();
+Series.sync();
 
 module.exports = {
-    Series
+    Series,
+    Comment
 };

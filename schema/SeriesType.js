@@ -32,9 +32,7 @@ module.exports = new GraphQLObjectType({
         },
         comments: {
             type: new GraphQLList(CommentType),
-            resolve: (root) => {
-
-            }
+            resolve: (root) => root.comments
         }
     })
 });
