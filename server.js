@@ -9,4 +9,8 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true
 }));
 
-app.listen(8080);
+const port = 8080;
+
+app.listen(port, () => {
+    console.log("Server started at port " + port);
+});
