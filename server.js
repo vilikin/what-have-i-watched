@@ -4,6 +4,8 @@ const Schema = require('./schema/Schema');
 
 const app = express();
 
+const SERVER_PORT = 8080;
+
 require('./data/db');
 
 app.use('/graphql', graphqlHTTP({
@@ -11,8 +13,6 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true
 }));
 
-const port = 8080;
-
-app.listen(port, () => {
-    console.log("Server started at port " + port);
+app.listen(SERVER_PORT, () => {
+    console.log("Server started at port " + SERVER_PORT);
 });
