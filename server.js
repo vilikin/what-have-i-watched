@@ -6,6 +6,9 @@ const app = express();
 
 const SERVER_PORT = 8080;
 
+// Load variables from .env file
+require('dotenv').config();
+
 require('./data/db');
 
 app.use('/graphql', graphqlHTTP({

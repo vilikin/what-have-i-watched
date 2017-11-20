@@ -1,11 +1,14 @@
 const Sequelize = require('sequelize');
 
-const db = 'dbc4vkinnu1';
-const user = 'c4vkinnu';
-const pass = 'Salasana123';
+const {
+    DB_HOST,
+    DB_NAME,
+    DB_USER,
+    DB_PASS
+} = process.env;
 
-const sequelize = new Sequelize(db, user, pass, {
-    host: 'mydb.tamk.fi',
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+    host: DB_HOST,
     dialect: 'mysql',
     pool: {
         max: 5,
