@@ -10,6 +10,7 @@ const {
 const { Series, Comment } = require("../data/db");
 
 const SeriesType = require('./SeriesType');
+const CommentType = require('./CommentType');
 
 module.exports = new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -43,6 +44,39 @@ module.exports = new GraphQLSchema({
                     }
                 },
                 resolve: (value, series) => Series.create(series)
+            },
+            addComment: {
+                type: new GraphQLNonNull(CommentType),
+                description: 'Add a new comment to a series and return it.',
+                args: {
+                    series: {
+                        type: new GraphQLNonNull(GraphQLInt)
+                    },
+                    user: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    },
+                    text: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    }
+                },
+                resolve: async (value, args) => {
+                    const series = await Series.find({
+                        where: {
+                            id: args.series
+                        }
+                    });
+
+                    if (!series) throw new Error("Couldn't find any series with id " + args.series);
+
+                    const comment = await Comment.create({
+                        user: args.user,
+                        text: args.text
+                    });
+
+                    await series.addComment(comment);
+
+                    return comment;
+                }
             }
         })
     })

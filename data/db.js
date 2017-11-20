@@ -16,6 +16,11 @@ const sequelize = new Sequelize(db, user, pass, {
 });
 
 const Comment = sequelize.define('comment', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     user: {
         type: Sequelize.STRING,
         allowNull: false
