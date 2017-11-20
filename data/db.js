@@ -53,7 +53,7 @@ const Series = sequelize.define('series', {
     }
 });
 
-Series.hasMany(Comment);
+Comment.belongsTo(Series);
 
 Comment.sync();
 Series.sync();
