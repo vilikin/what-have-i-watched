@@ -76,6 +76,23 @@ module.exports = new GraphQLSchema({
                     return series;
                 }
             },
+            removeSeries: {
+                type: new GraphQLNonNull(SeriesType),
+                args: {
+                    id: {
+                        type: new GraphQLNonNull(GraphQLInt)
+                    }
+                },
+                resolve: async (value, args) => {
+                    const series = await Series.findById(args.id);
+
+                    if (!series) throw new Error("Couldn't find any series with id " + args.id);
+
+                    await series.destroy();
+
+                    return series;
+                }
+            },
             addComment: {
                 type: new GraphQLNonNull(CommentType),
                 description: 'Add a new comment to a series and return it.',
