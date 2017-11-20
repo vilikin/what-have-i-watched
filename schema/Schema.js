@@ -45,6 +45,37 @@ module.exports = new GraphQLSchema({
                 },
                 resolve: (value, series) => Series.create(series)
             },
+            modifySeries: {
+                type: new GraphQLNonNull(SeriesType),
+                args: {
+                    id: {
+                        type: new GraphQLNonNull(GraphQLInt)
+                    },
+                    name: {
+                        type: GraphQLString
+                    },
+                    description: {
+                        type: GraphQLString
+                    },
+                    currentEpisode: {
+                        type: GraphQLInt
+                    },
+                    currentSeason: {
+                        type: GraphQLInt
+                    }
+                },
+                resolve: async (value, args) => {
+                    const series = await Series.findById(args.id);
+
+                    if (!series) throw new Error("Couldn't find any series with id " + args.id);
+
+                    delete args.id;
+
+                    await series.update(args);
+
+                    return series;
+                }
+            },
             addComment: {
                 type: new GraphQLNonNull(CommentType),
                 description: 'Add a new comment to a series and return it.',
@@ -60,11 +91,7 @@ module.exports = new GraphQLSchema({
                     }
                 },
                 resolve: async (value, args) => {
-                    const series = await Series.find({
-                        where: {
-                            id: args.series
-                        }
-                    });
+                    const series = await Series.findById(args.series);
 
                     if (!series) throw new Error("Couldn't find any series with id " + args.series);
 
